@@ -56,14 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Player\Version1\PlayerMover.cs" />
-    <Compile Include="Assets\Scripts\Player\Old\PlayerTmp.cs" />
-    <Compile Include="Assets\Scripts\Player\Version1\Player.cs" />
-    <Compile Include="Assets\Scripts\Player\Old\PlayerMoverTmp.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMover.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMoveable.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
-    <Compile Include="Assets\Scripts\Player\Version2\Player1.cs" />
-    <Compile Include="Assets\Scripts\Player\Version2\PlayerMover1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
