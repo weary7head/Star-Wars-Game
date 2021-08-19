@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(CharacterController))]
     class Player : MonoBehaviour
     {
         [SerializeField] private float _speed = 6.0f;
         [SerializeField] private float _gravity = -9.81f;
-
-        private PlayerMover _playerMover;
+        private PlayerInputProvider _inputProvider;
+        private PlayerMover _mover;
 
         private void Awake()
         {
-            _playerMover = new PlayerMover(GetComponent<CharacterController>(), transform);
+            _inputProvider = new PlayerInputProvider();
+            _mover = new PlayerMover(GetComponent<CharacterController>(), transform, _inputProvider);
         }
 
         private void OnEnable()
         {
-            _playerMover.EnableInput();
+            _inputProvider.EnableInput();
         }
 
         private void Update()
         {
-            _playerMover.Move(_speed, _gravity);
+            _mover.Move(_speed, _gravity);
         }
 
         private void OnDisable()
         {
-            _playerMover.DisableInput();    
+            _inputProvider.DisableInput();    
         }
     }
 }

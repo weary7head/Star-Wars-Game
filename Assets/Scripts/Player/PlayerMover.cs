@@ -1,35 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
     class PlayerMover
     {
-        private PlayerInput _input;
+        
         private CharacterController _characterController;
         private Transform _transform;
+        private PlayerInputProvider _inputProvider;
 
-        public PlayerMover(CharacterController characterController, Transform transform)
+        public PlayerMover(CharacterController characterController, Transform transform, PlayerInputProvider inputProvider)
         {
-            _input = new PlayerInput();
+            _inputProvider = inputProvider;
             _characterController = characterController;
             _transform = transform;
         }
 
-        public void EnableInput()
-        {
-            _input.Enable();
-        }
-
-        public void DisableInput()
-        {
-            _input.Disable();
-        }
         public void Move(float speed, float gravity)
         {
-            Vector2 temporaryDirection = _input.Player.Movement.ReadValue<Vector2>();
+            Vector2 temporaryDirection = _inputProvider.GetMovement();
             Vector3 movement = new Vector3(temporaryDirection.x, gravity, temporaryDirection.y);
             movement = Vector3.ClampMagnitude(movement, speed);
             movement *= Time.deltaTime;
