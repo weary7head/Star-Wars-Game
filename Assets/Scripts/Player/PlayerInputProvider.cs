@@ -31,11 +31,19 @@ public class PlayerInputProvider
 
     public bool IsJumpPressed()
     {
-        return _input.Player.Jump.ReadValue<bool>();
+        if (_input.Player.Jump.ReadValue<float>() > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool IsShootPressed()
     {
-        return _input.Player.Shoot.ReadValue<bool>();
+        if (_input.Player.Shoot.ReadValue<float>() > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
