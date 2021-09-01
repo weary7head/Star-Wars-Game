@@ -4,9 +4,14 @@ using UnityEngine.PlayerLoop;
 public class Gun : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private float _damage = 10f;
-    [SerializeField] private float range = 100f;
+    [SerializeField] private GameObject _laser;
+    [SerializeField] private Transform _spawnPosition;
     private PlayerInputProvider _inputProvider;
+
+    private void OnEnable()
+    {
+        _inputProvider.EnableInput();
+    }
 
     private void Awake()
     {
@@ -20,17 +25,15 @@ public class Gun : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _inputProvider.DisableInput();
+    }
+
     private void Shoot()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out hit, range))
-        {
-            Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
-            {
-                target.TakeDamage(_damage);
-            }
-            Debug.Log(hit.transform.name);
-        }
+
+            Instantiate(_laser, _spawnPosition.position, transform.rotation);
+
     }
 }

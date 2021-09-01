@@ -22,7 +22,7 @@ public class CameraRotator : MonoBehaviour
         _inputProvider.EnableInput();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         _rotationX -= _inputProvider.GetMouseLook().y * _verticalSensitivity;
         _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
