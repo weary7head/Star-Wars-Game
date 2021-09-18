@@ -6,8 +6,10 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject _laser;
     [SerializeField] private Transform _spawnPosition;
     [SerializeField] private float _distance = 100f;
+    [SerializeField] private float _fireRate = 15f;
     private PlayerInputProvider _inputProvider;
     private RayShooter _rayShooter;
+    private float _nextTimeToFire = 0f;
 
     private void OnEnable()
     {
@@ -21,8 +23,9 @@ public class Gun : MonoBehaviour
     }
     private void Update()
     {
-        if (_inputProvider.IsShootPressed())
+        if (_inputProvider.IsShootPressed() && Time.time >= _nextTimeToFire)
         {
+            _nextTimeToFire = Time.time + 1f / _fireRate;
             Shoot();
         }
     }
