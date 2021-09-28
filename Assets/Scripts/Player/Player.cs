@@ -5,14 +5,18 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(CharacterController))]
     class Player : MonoBehaviour
     {
+        [Header("Movement")]
         [SerializeField] private GroundChecker _groundChecker;
         [SerializeField] private float _speed = 6.0f;
         [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _jumpHeight = 3f;
+        [Header("Camera")]
         [SerializeField] private float _minimumVertical = -45.0f;
         [SerializeField] private float _maximumVertical = 45.0f;
         [SerializeField] private float _horizontalSensitivity = 1f;
         [SerializeField] private float _verticalSensitivity = 1f;
+        [Header("Stats")]
+        [SerializeField, Range(0f, 100f)] private float _health = 100f;
         private PlayerInputProvider _inputProvider;
         private PlayerMover _mover;
         private PlayerRotator _rotator;
@@ -40,6 +44,29 @@ namespace Assets.Scripts.Player
         private void OnDisable()
         {
             _inputProvider.DisableInput();    
+        }
+
+        public void GetHealth(float count)
+        {
+            _health += count;
+            if (_health > 100)
+            {
+                _health = 100;
+            }
+        }
+
+        public void GetDamage(float damage)
+        {
+            _health -= damage;
+            if (_health <= 0)
+            {
+                Die();
+            }
+        }
+
+        public void Die()
+        {
+
         }
     }
 }

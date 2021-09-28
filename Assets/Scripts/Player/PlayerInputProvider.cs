@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerInputProvider
 {
     private PlayerInput _input;
-
     public PlayerInputProvider()
     {
         _input = new PlayerInput();

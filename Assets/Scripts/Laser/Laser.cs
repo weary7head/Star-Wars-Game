@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
     [SerializeField] private float _speed = 10.0f;
-    [SerializeField] private int _damage = 1;
+    [SerializeField] private float _damage = 10f;
+    private Target _target;
     private Vector3 _direction;
     public Laser(Vector3 direction)
     {
@@ -24,8 +24,12 @@ public class Laser : MonoBehaviour
         transform.Translate(Time.deltaTime * _direction, Space.World);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.TryGetComponent(out _target))
+        {
+            _target.GetDamage(_damage);
+        }
         Destroy(this.gameObject);
     }
 
