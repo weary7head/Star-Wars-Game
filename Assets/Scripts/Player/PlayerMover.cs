@@ -7,23 +7,21 @@ namespace Assets.Scripts.Player
         private CharacterController _characterController;
         private Transform _transform;
         private PlayerInputProvider _inputProvider;
-        private GroundChecker _groundChecker;
         private Vector3 _velocity;
 
-        public PlayerMover(CharacterController characterController, Transform transform, PlayerInputProvider inputProvider, GroundChecker groundChecker)
+        public PlayerMover(CharacterController characterController, Transform transform, PlayerInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _characterController = characterController;
             _transform = transform;
             _velocity = Vector3.zero;
-            _groundChecker = groundChecker;
         }
 
-        public void Move(float speed, float gravity, float jumpHeight)
+        public void Move(float speed, float jumpHeight, float deltaTime)
         {
-            if(_groundChecker.IsGrounded() && _velocity.y < 0)
+            if(_characterController.isGrounded)
             {
-                _velocity.y = -2f;
+                _velocity.y = Physics.gravity.y;
             }
 
             Vector2 direction = _inputProvider.GetMovement();
@@ -31,11 +29,12 @@ namespace Assets.Scripts.Player
             movement = Vector3.ClampMagnitude(movement, speed);
             _characterController.Move(movement * speed * Time.deltaTime);
 
-            if (_inputProvider.IsJumpPressed() && _groundChecker.IsGrounded())
+            if (_inputProvider.IsJumpPressed() && _characterController.isGrounded)
             {
-                _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y * deltaTime);
             }
-            _velocity.y += gravity * Time.deltaTime * Time.deltaTime;
+            _velocity.y += Physics.gravity.y * deltaTime;
+         
             _characterController.Move(_velocity);
         }
     }

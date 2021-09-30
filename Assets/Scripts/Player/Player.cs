@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
     [RequireComponent(typeof(CharacterController))]
     class Player : MonoBehaviour
     {
+        [Header("Steps Audio Source")]
+        [SerializeField] private AudioSource _audioSource;
         [Header("Movement")]
-        [SerializeField] private GroundChecker _groundChecker;
         [SerializeField] private float _speed = 6.0f;
-        [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _jumpHeight = 3f;
         [Header("Camera")]
         [SerializeField] private float _minimumVertical = -45.0f;
@@ -22,11 +23,13 @@ namespace Assets.Scripts.Player
         private PlayerRotator _rotator;
         private Transform _transform;
 
+        public event Action<int> OnHealthChanged;
+
         private void Awake()
         {
             _transform = GetComponent<Transform>();
             _inputProvider = new PlayerInputProvider();
-            _mover = new PlayerMover(GetComponent<CharacterController>(), _transform, _inputProvider, _groundChecker);
+            _mover = new PlayerMover(GetComponent<CharacterController>(), _transform, _inputProvider);
             _rotator = new PlayerRotator(_transform, _inputProvider);
         }
 
@@ -35,9 +38,18 @@ namespace Assets.Scripts.Player
             _inputProvider.EnableInput();
         }
 
+        private void Start()
+        {
+            OnHealthChanged?.Invoke(Convert.ToInt32(_health));
+        }
+
         private void Update()
         {
-            _mover.Move(_speed, _gravity, _jumpHeight);
+            _mover.Move(_speed, _jumpHeight, Time.deltaTime);
+            if (transform.hasChanged)
+            {
+                _audioSource.Play();
+            }
             _rotator.Rotate(_minimumVertical, _maximumVertical, _horizontalSensitivity, _verticalSensitivity);
         }
 
@@ -53,6 +65,7 @@ namespace Assets.Scripts.Player
             {
                 _health = 100;
             }
+            OnHealthChanged?.Invoke(Convert.ToInt32(_health));
         }
 
         public void GetDamage(float damage)
@@ -62,6 +75,7 @@ namespace Assets.Scripts.Player
             {
                 Die();
             }
+            OnHealthChanged?.Invoke(Convert.ToInt32(_health));
         }
 
         public void Die()

@@ -9,6 +9,7 @@ public class GroundChecker : MonoBehaviour
     public bool IsGrounded()
     {
         _isGrounded = Physics.CheckSphere(transform.position, _inspectionRadius, _groundMask);
+        Debug.Log(_isGrounded);
         return _isGrounded;
     }
 }

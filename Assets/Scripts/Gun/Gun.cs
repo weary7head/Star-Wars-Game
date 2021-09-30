@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
     private PlayerInputProvider _inputProvider;
     private RayShooter _rayShooter;
     private float _nextTimeToFire = 0f;
+    private AudioSource _fireAudioSource;
 
     private void OnEnable()
     {
@@ -21,6 +22,7 @@ public class Gun : MonoBehaviour
     {
         _inputProvider = new PlayerInputProvider();
         _rayShooter = new RayShooter(_camera, _distance);
+        _fireAudioSource = _spawnPosition.GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -28,6 +30,7 @@ public class Gun : MonoBehaviour
         {
             _nextTimeToFire = Time.time + 1f / _fireRate;
             Shoot();
+            _fireAudioSource.Play();
         }
     }
 
