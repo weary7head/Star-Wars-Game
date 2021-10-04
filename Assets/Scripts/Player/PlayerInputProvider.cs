@@ -45,4 +45,13 @@ public class PlayerInputProvider
         }
         return false;
     }
+
+    public bool IsPausePressed()
+    {
+        if (_input.Player.Pause.ReadValue<float>() > 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }

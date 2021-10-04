@@ -666,10 +666,10 @@ CharacterController:
   serializedVersion: 2
   m_Height: 5
   m_Radius: 1
-  m_SlopeLimit: 45
-  m_StepOffset: 1
+  m_SlopeLimit: 90
+  m_StepOffset: 0.2
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0.5, y: 2.5, z: 0}
 --- !u!114 &4771417179044484135
 MonoBehaviour:
@@ -684,10 +684,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 470504231}
-  _groundChecker: {fileID: 0}
   _speed: 10
-  _gravity: -19.81
-  _jumpHeight: 0.003
+  _jumpHeight: 6
   _minimumVertical: -45
   _maximumVertical: 45
   _horizontalSensitivity: 1

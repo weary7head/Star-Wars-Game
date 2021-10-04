@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     {
         _sceneProvider = new SceneProvider();
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Quit()

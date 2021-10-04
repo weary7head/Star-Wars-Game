@@ -18,12 +18,15 @@ namespace Assets.Scripts.Player
         [SerializeField] private float _verticalSensitivity = 1f;
         [Header("Stats")]
         [SerializeField, Range(0f, 100f)] private float _health = 100f;
+        [SerializeField] private PauseMenu _pause;
+
         private PlayerInputProvider _inputProvider;
         private PlayerMover _mover;
         private PlayerRotator _rotator;
         private Transform _transform;
 
         public event Action<int> OnHealthChanged;
+        public event Action OnPausePressed;
 
         private void Awake()
         {
@@ -31,11 +34,15 @@ namespace Assets.Scripts.Player
             _inputProvider = new PlayerInputProvider();
             _mover = new PlayerMover(GetComponent<CharacterController>(), _transform, _inputProvider);
             _rotator = new PlayerRotator(_transform, _inputProvider);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void OnEnable()
         {
             _inputProvider.EnableInput();
+            _pause.OnHorizontalSensitivityChanged += SetHorizontalSensitivity;
+            _pause.OnVerticalSensitivityChanged += SetVerticalSensitivity;
         }
 
         private void Start()
@@ -51,11 +58,18 @@ namespace Assets.Scripts.Player
                 _audioSource.Play();
             }
             _rotator.Rotate(_minimumVertical, _maximumVertical, _horizontalSensitivity, _verticalSensitivity);
+
+            if (_inputProvider.IsPausePressed())
+            {
+                OnPausePressed?.Invoke();
+            }
         }
 
         private void OnDisable()
         {
-            _inputProvider.DisableInput();    
+            _inputProvider.DisableInput();
+            _pause.OnHorizontalSensitivityChanged -= SetHorizontalSensitivity;
+            _pause.OnVerticalSensitivityChanged -= SetVerticalSensitivity;
         }
 
         public void GetHealth(float count)
@@ -80,7 +94,27 @@ namespace Assets.Scripts.Player
 
         public void Die()
         {
+            //TODO
+        }
 
+        private void SetVerticalSensitivity(float value)
+        {
+            _verticalSensitivity = value;
+        }
+
+        private void SetHorizontalSensitivity(float value)
+        {
+            _horizontalSensitivity = value;
+        }
+
+        public float GetVerticalSensitivity()
+        {
+            return _verticalSensitivity;
+        }
+
+        public float GetHorizontalSensitivity()
+        {
+            return _horizontalSensitivity;
         }
     }
 }
