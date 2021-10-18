@@ -9,7 +9,7 @@ public class Quest : MonoBehaviour
     private int _winCount = 3;
     private int _deathCount = 0;
     private SceneProvider _sceneProvider;
-    private event Action OnQuestCompleted;
+    private event Action QuestCompleted;
 
     private void Awake()
     {
@@ -20,26 +20,26 @@ public class Quest : MonoBehaviour
     {
         foreach (Target target in _targets)
         {
-            target.OnDead += IncreaseDeathCount;
+            target.DeadsCountChanged += OnDeathCountChanged;
         }
-        OnQuestCompleted += QuestComplete;
+        QuestCompleted += QuestComplete;
     }
 
     private void OnDisable()
     {
         foreach (Target target in _targets)
         {
-            target.OnDead -= IncreaseDeathCount;
+            target.DeadsCountChanged -= OnDeathCountChanged;
         }
-        OnQuestCompleted -= QuestComplete;
+        QuestCompleted -= QuestComplete;
     }
 
-    private void IncreaseDeathCount()
+    private void OnDeathCountChanged()
     {
         ++_deathCount;
         if (_deathCount == _winCount)
         {
-            OnQuestCompleted?.Invoke();
+            QuestCompleted?.Invoke();
         }
     }
 

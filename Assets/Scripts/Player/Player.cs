@@ -25,8 +25,8 @@ namespace Assets.Scripts.Player
         private PlayerRotator _rotator;
         private Transform _transform;
 
-        public event Action<int> OnHealthChanged;
-        public event Action OnPausePressed;
+        public event Action<int> HealthChanged;
+        public event Action PausePressed;
 
         private void Awake()
         {
@@ -41,13 +41,13 @@ namespace Assets.Scripts.Player
         private void OnEnable()
         {
             _inputProvider.EnableInput();
-            _pause.OnHorizontalSensitivityChanged += SetHorizontalSensitivity;
-            _pause.OnVerticalSensitivityChanged += SetVerticalSensitivity;
+            _pause.HorizontalSensitivityChanged += SetHorizontalSensitivity;
+            _pause.VerticalSensitivityChanged += SetVerticalSensitivity;
         }
 
         private void Start()
         {
-            OnHealthChanged?.Invoke(Convert.ToInt32(_health));
+            HealthChanged?.Invoke(Convert.ToInt32(_health));
         }
 
         private void Update()
@@ -61,15 +61,15 @@ namespace Assets.Scripts.Player
 
             if (_inputProvider.IsPausePressed())
             {
-                OnPausePressed?.Invoke();
+                PausePressed?.Invoke();
             }
         }
 
         private void OnDisable()
         {
             _inputProvider.DisableInput();
-            _pause.OnHorizontalSensitivityChanged -= SetHorizontalSensitivity;
-            _pause.OnVerticalSensitivityChanged -= SetVerticalSensitivity;
+            _pause.HorizontalSensitivityChanged -= SetHorizontalSensitivity;
+            _pause.VerticalSensitivityChanged -= SetVerticalSensitivity;
         }
 
         public void GetHealth(float count)
@@ -79,7 +79,7 @@ namespace Assets.Scripts.Player
             {
                 _health = 100;
             }
-            OnHealthChanged?.Invoke(Convert.ToInt32(_health));
+            HealthChanged?.Invoke(Convert.ToInt32(_health));
         }
 
         public void GetDamage(float damage)
@@ -89,7 +89,7 @@ namespace Assets.Scripts.Player
             {
                 Die();
             }
-            OnHealthChanged?.Invoke(Convert.ToInt32(_health));
+            HealthChanged?.Invoke(Convert.ToInt32(_health));
         }
 
         public void Die()

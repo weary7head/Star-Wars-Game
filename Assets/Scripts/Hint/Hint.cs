@@ -8,27 +8,27 @@ public class Hint : MonoBehaviour
 {
     [SerializeField] private string _hint;
     [SerializeField] private HintGenerator _hintGenerator;
-    private Action _onDestroy;
+    private Action _destroyed;
 
     private void OnEnable()
     {
-        _onDestroy += Destroy;
+        _destroyed += OnDestroy;
     }
 
     private void OnDisable()
     {
-        _onDestroy -= Destroy;
+        _destroyed -= OnDestroy;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Player>())
         {
-            StartCoroutine(_hintGenerator.ShowHint(_hint, _onDestroy));
+            StartCoroutine(_hintGenerator.ShowHint(_hint, _destroyed));
         }
     }
 
-    private void Destroy()
+    private void OnDestroy()
     {
         Destroy(gameObject);
     }

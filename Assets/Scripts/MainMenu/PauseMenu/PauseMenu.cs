@@ -16,8 +16,8 @@ public class PauseMenu : MonoBehaviour
     private float _nextTimeToPress = 0f;
     private SceneProvider _sceneProvider;
 
-    public event Action<float> OnHorizontalSensitivityChanged; 
-    public event Action<float> OnVerticalSensitivityChanged;
+    public event Action<float> HorizontalSensitivityChanged; 
+    public event Action<float> VerticalSensitivityChanged;
 
     private void Awake()
     {
@@ -28,12 +28,12 @@ public class PauseMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.OnPausePressed += PausePressed;
+        _player.PausePressed += OnPausePressed;
     }
 
     private void OnDisable()
     {
-        _player.OnPausePressed -= PausePressed;
+        _player.PausePressed -= OnPausePressed;
     }
 
     private void OnDestroy()
@@ -41,7 +41,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    private void PausePressed()
+    private void OnPausePressed()
     {
         if (Time.unscaledTime>= _nextTimeToPress)
         {
@@ -82,11 +82,11 @@ public class PauseMenu : MonoBehaviour
 
     public void SetHorizontalSensitivity(float value)
     {
-        OnHorizontalSensitivityChanged?.Invoke(value);
+        HorizontalSensitivityChanged?.Invoke(value);
     }
 
     public void SetVerticalSensitivity(float value)
     {
-        OnVerticalSensitivityChanged?.Invoke(value);
+        VerticalSensitivityChanged?.Invoke(value);
     }
 }

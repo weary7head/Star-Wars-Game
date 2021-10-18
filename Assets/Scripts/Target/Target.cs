@@ -4,7 +4,7 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     [SerializeField, Range(0f, 100f)] private float _health = 100f;
-    public event Action OnDead;
+    public event Action DeadsCountChanged;
 
     public void GetDamage(float count)
     {
@@ -18,6 +18,6 @@ public class Target : MonoBehaviour
 
     private void Die()
     {
-        OnDead?.Invoke();
+        DeadsCountChanged?.Invoke();
     }
 }

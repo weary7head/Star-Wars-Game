@@ -14,7 +14,7 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.OnHealthChanged += SetHealth;
+        _player.HealthChanged += OnSetHealth;
     }
 
     private void Awake()
@@ -24,10 +24,10 @@ public class HealthBar : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.OnHealthChanged -= SetHealth;
+        _player.HealthChanged -= OnSetHealth;
     }
 
-    private void SetHealth(int health)
+    private void OnSetHealth(int health)
     {
         _slider.value = health;
     }
