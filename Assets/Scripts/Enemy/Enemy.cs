@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Animator))]
@@ -15,6 +16,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _attackRange = 10;
     [SerializeField] private float _sightRange = 20;
     [SerializeField] private Transform _raysCaster;
+    [SerializeField] private Rig _rigLayerBlaster;
+    [SerializeField] private Rig _rigLayerFire;
+
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
     private float _timer = 0;
@@ -130,20 +134,32 @@ public class Enemy : MonoBehaviour
             case State.Idle:
                 _animator.SetFloat("FiringSpeed", -1f);
                 _animator.SetFloat("Speed", -1f);
+                _rigLayerFire.weight = 0f;
+                _rigLayerBlaster.weight = 1f;
                 break;
             case State.Walk:
                 _animator.SetFloat("Speed", 0.5f);
+                _rigLayerFire.weight = 0f;
+                _rigLayerBlaster.weight = 1f;
                 break;
             case State.Run:
                 _animator.SetFloat("Speed", 1f);
+                _rigLayerFire.weight = 0f;
+                _rigLayerBlaster.weight = 0f;
                 break;
             case State.Fire:
                 _animator.SetFloat("FiringSpeed", 0.5f);
+                _rigLayerFire.weight = 1f;
+                _rigLayerBlaster.weight = 0f;
                 break;
             case State.WalkingFire:
                 _animator.SetFloat("FiringSpeed", 1f);
+                _rigLayerFire.weight = 1f;
+                _rigLayerBlaster.weight = 0f;
                 break;
             case State.Die:
+                _rigLayerFire.weight = 0f;
+                _rigLayerBlaster.weight = 1f;
                 break;
         }
     }
