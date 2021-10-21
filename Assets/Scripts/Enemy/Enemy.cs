@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour
     private bool _isTargetInSightRange;
     private bool _isTargetInAttackRange;
     private Transform _transform;
+    private float _offsetY = 3;
+
+    public event Action<Vector3> Shooted;
 
     private void Start()
     {
@@ -38,14 +41,6 @@ public class Enemy : MonoBehaviour
     {
         _isTargetInSightRange = Physics.CheckSphere(_transform.position, _sightRange, _playerMask);
         _isTargetInAttackRange = Physics.CheckSphere(_transform.position, _attackRange, _playerMask);
-       
-        //Debug.DrawRay(_raysCaster.position, _raysCaster.transform.forward * _sightRange, Color.red);
-        Debug.DrawRay(_raysCaster.position, (_raysCaster.transform.forward + _raysCaster.transform.right) * _sightRange, Color.green);
-        Debug.DrawRay(_raysCaster.position, (_raysCaster.transform.forward - _raysCaster.transform.right) * _sightRange, Color.blue);
-        Debug.DrawRay(_raysCaster.position, (_raysCaster.transform.forward - _raysCaster.transform.up) * _sightRange, Color.magenta);
-        Debug.DrawRay(_raysCaster.position, (_raysCaster.transform.forward + _raysCaster.transform.up) * _sightRange, Color.yellow);
-        Debug.DrawRay(_raysCaster.position, ((_raysCaster.transform.forward - _raysCaster.transform.right) + _raysCaster.transform.up) * _sightRange, Color.white);
-        Debug.DrawRay(_raysCaster.position, ((_raysCaster.transform.forward + _raysCaster.transform.right) + _raysCaster.transform.up) * _sightRange, Color.cyan);
 
         if (_isTargetInSightRange == false && _isTargetInAttackRange == false)
         {
@@ -56,68 +51,12 @@ public class Enemy : MonoBehaviour
         }
         if (_isTargetInSightRange == true && _isTargetInAttackRange == false)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(_raysCaster.position, _sightRange, _playerMask);
-          
-            if (hitColliders.Length != 0)
-            {
-                foreach (Collider hitCollider in hitColliders)
-                {
-                    Player player = hitCollider.GetComponent<Player>();
-                    Vector3 playerPosition = player.transform.position;
-                    Debug.DrawRay(_raysCaster.position, playerPosition - _raysCaster.transform.position, Color.red);
-                    _navMeshAgent.SetDestination(playerPosition);
-                    SetState(State.WalkingFire);
-                }
-            }
-            else
-            {
-                _navMeshAgent.SetDestination(_transform.position);
-                SetState(State.Idle);
-            }
-
-           
-
-
-            //Vector3 playerPosition = FindEnemy();
-
-            //if (playerPosition != Vector3.zero)
-            //{
-            //    _navMeshAgent.SetDestination(playerPosition);
-            //    SetState(State.WalkingFire);
-            //}
+            FindEnemy(State.WalkingFire, false);
         }
-        else if (_isTargetInSightRange == true && _isTargetInAttackRange == true)
+        if (_isTargetInSightRange == true && _isTargetInAttackRange == true)
         {
             _navMeshAgent.SetDestination(_transform.position);
-            Collider[] hitColliders = Physics.OverlapSphere(_raysCaster.position, _sightRange, _playerMask);
-            
-            if (hitColliders.Length != 0)
-            {
-                foreach (Collider hitCollider in hitColliders)
-                {
-                    Player player = hitCollider.GetComponent<Player>();
-                    Vector3 playerPosition = player.transform.position;
-                    Debug.DrawRay(_raysCaster.position, playerPosition - _raysCaster.transform.position, Color.green);
-                    _transform.LookAt(playerPosition);
-                    SetState(State.Fire);
-                }
-            }
-            else
-            {
-                _navMeshAgent.SetDestination(_transform.position);
-                SetState(State.Idle);
-            }
-
-
-
-            //Vector3 playerPosition = FindEnemy();
-
-            //if (playerPosition != Vector3.zero)
-            //{
-            //    _navMeshAgent.SetDestination(_transform.position);
-            //    _transform.LookAt(playerPosition);
-            //    SetState(State.Fire);
-            //}
+            FindEnemy(State.Fire, true);
         }
     }
 
@@ -176,6 +115,45 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void FindEnemy(State state, bool isLookAt)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(_raysCaster.position, _sightRange, _playerMask);
+
+        if (hitColliders.Length != 0)
+        {
+            foreach (Collider hitCollider in hitColliders)
+            {
+                Player player = hitCollider.GetComponent<Player>();
+                Vector3 playerPosition = player.transform.position;
+                playerPosition.y += _offsetY;
+
+                if (isLookAt)
+                {
+                    _transform.LookAt(playerPosition);
+                }
+                else
+                {
+                    _navMeshAgent.SetDestination(playerPosition);
+                }
+
+                Vector3 target = playerPosition - _raysCaster.transform.position;
+                Debug.DrawRay(_raysCaster.position, target, Color.green);
+                if (Physics.Raycast(_raysCaster.position, target, _sightRange, _playerMask))
+                {
+                    
+                    Shooted?.Invoke(playerPosition);
+                }
+
+                SetState(state);
+            }
+        }
+        else
+        {
+            _navMeshAgent.SetDestination(_transform.position);
+            SetState(State.Idle);
+        }
+    }
+
     private enum State
     {
         Idle,
@@ -185,5 +163,4 @@ public class Enemy : MonoBehaviour
         WalkingFire,
         Die
     }
-
 }

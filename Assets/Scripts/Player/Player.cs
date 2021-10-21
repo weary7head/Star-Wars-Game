@@ -6,8 +6,6 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(CharacterController))]
     class Player : MonoBehaviour
     {
-        [Header("Steps Audio Source")]
-        [SerializeField] private AudioSource _audioSource;
         [Header("Movement")]
         [SerializeField] private float _speed = 6.0f;
         [SerializeField] private float _jumpHeight = 3f;
@@ -53,10 +51,6 @@ namespace Assets.Scripts.Player
         private void Update()
         {
             _mover.Move(_speed, _jumpHeight, Time.deltaTime);
-            if (transform.hasChanged)
-            {
-                _audioSource.Play();
-            }
             _rotator.Rotate(_minimumVertical, _maximumVertical, _horizontalSensitivity, _verticalSensitivity);
 
             if (_inputProvider.IsPausePressed())

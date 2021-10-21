@@ -1,5 +1,135 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1141240048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1141240049}
+  - component: {fileID: 1141240050}
+  m_Layer: 6
+  m_Name: BlasterPose
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1141240049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141240048}
+  m_LocalRotation: {x: 0.019588144, y: -0.07243554, z: 0.052280217, w: 0.9958093}
+  m_LocalPosition: {x: 0.00267, y: 0.01546, z: 0.00279}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1180024191}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 2.67, y: -8.185, z: 5.819}
+--- !u!114 &1141240050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141240048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8935e03361a14ec4b8edc872f76bc822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Weight: 1
+  m_Data:
+    m_ConstrainedObject: {fileID: 556473855321891888}
+    m_SourceObjects:
+      m_Length: 1
+      m_Item0:
+        transform: {fileID: 1141240049}
+        weight: 1
+      m_Item1:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item2:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item3:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item4:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item5:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item6:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item7:
+        transform: {fileID: 0}
+        weight: 0
+    m_ConstrainedPositionAxes:
+      x: 1
+      y: 1
+      z: 1
+    m_ConstrainedRotationAxes:
+      x: 1
+      y: 1
+      z: 1
+    m_MaintainPositionOffset: 0
+    m_MaintainRotationOffset: 0
+  m_SourceObjectsGUIToggle: 1
+  m_SettingsGUIToggle: 1
+--- !u!1 &1180024189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180024191}
+  - component: {fileID: 1180024190}
+  m_Layer: 6
+  m_Name: RigLayerFirePose
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1180024191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180024189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1141240049}
+  m_Father: {fileID: 556473855444730073}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1180024190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180024189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Weight: 0
+  m_Effectors: []
 --- !u!1 &556473853618731484
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +574,7 @@ Transform:
   - {fileID: 556473855067583668}
   - {fileID: 556473853883504760}
   m_Father: {fileID: 556473855444730073}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &556473854344671441
 MonoBehaviour:
@@ -740,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!1 &556473854628224097
 GameObject:
@@ -1439,7 +1569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556473855321891888}
   - component: {fileID: 556473855321891894}
-  - component: {fileID: 556473855321891889}
+  - component: {fileID: 556473854361311276}
   m_Layer: 3
   m_Name: E11S
   m_TagString: Untagged
@@ -1478,7 +1608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &556473855321891889
+--- !u!114 &556473854361311276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1487,14 +1617,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 556473855321891891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c751939003034a499023fe7671b0a32, type: 3}
+  m_Script: {fileID: 11500000, guid: 965b8ef27b102e94a94d06bf318ad903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
-  _laser: {fileID: 122648, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+  _laser: {fileID: 122648, guid: cf3084f1bcf1519438a2efbbb7a9e944, type: 3}
   _spawnPosition: {fileID: 556473855618020972}
-  _distance: 100
   _fireRate: 1.5
+  _enemy: {fileID: 556473855444730074}
 --- !u!1 &556473855355080767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,7 +1698,6 @@ GameObject:
   - component: {fileID: 556473855444730075}
   - component: {fileID: 556473855444730074}
   - component: {fileID: 556473855444730053}
-  - component: {fileID: 556473855444730052}
   - component: {fileID: 556473855444730055}
   m_Layer: 6
   m_Name: CloneCommander
@@ -1594,6 +1722,7 @@ Transform:
   - {fileID: 556473853618731485}
   - {fileID: 556473854980026611}
   - {fileID: 556473854609732634}
+  - {fileID: 1180024191}
   - {fileID: 556473854344671446}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1638,7 +1767,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556473855444730054}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d2103a3d5d3254ba36f3ba31143f83, type: 3}
   m_Name: 
@@ -1655,6 +1784,8 @@ MonoBehaviour:
   _attackRange: 60
   _sightRange: 100
   _raysCaster: {fileID: 556473853618731485}
+  _rigLayerBlaster: {fileID: 556473854609732613}
+  _rigLayerFire: {fileID: 1180024190}
 --- !u!195 &556473855444730053
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1677,53 +1808,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &556473855444730052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556473855444730054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 556473853985598165}
-  - {fileID: 556473854638619113}
-  - {fileID: 556473854693977149}
-  - {fileID: 556473855277833965}
-  - {fileID: 556473855230577502}
-  - {fileID: 556473853811603361}
-  - {fileID: 556473854412309735}
-  - {fileID: 556473855265465860}
-  - {fileID: 556473854727451800}
-  - {fileID: 556473854465327035}
-  - {fileID: 556473854728173652}
-  - {fileID: 556473855148906149}
-  - {fileID: 556473855623909596}
-  - {fileID: 556473853771025596}
-  - {fileID: 556473855355080764}
-  - {fileID: 556473855676175796}
-  - {fileID: 556473854109430654}
-  - {fileID: 556473854583496312}
-  - {fileID: 556473855689959965}
-  - {fileID: 556473855700022721}
-  - {fileID: 556473855574228106}
-  - {fileID: 556473855447355053}
-  - {fileID: 556473854628224102}
-  - {fileID: 556473854378449434}
-  - {fileID: 556473855677037422}
-  - {fileID: 556473854978946772}
-  - {fileID: 556473855700096913}
-  - {fileID: 556473854368266061}
 --- !u!114 &556473855444730055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1738,6 +1822,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RigLayers:
   - m_Rig: {fileID: 556473854609732613}
+    m_Active: 1
+  - m_Rig: {fileID: 1180024190}
     m_Active: 1
   - m_Rig: {fileID: 556473854344671441}
     m_Active: 1
