@@ -1,4 +1,3 @@
-using System;
 using Assets.Scripts.Player;
 using UnityEngine;
 

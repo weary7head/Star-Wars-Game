@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.Player;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
@@ -6,6 +7,8 @@ public class Laser : MonoBehaviour
     [SerializeField] private float _speed = 10.0f;
     [SerializeField] private float _damage = 10f;
     private Target _target;
+    private Enemy _enemy;
+    private Player _player;
     private Vector3 _direction;
     public Laser(Vector3 direction)
     {
@@ -29,6 +32,14 @@ public class Laser : MonoBehaviour
         if (other.gameObject.TryGetComponent(out _target))
         {
             _target.GetDamage(_damage);
+        }
+        else if (other.gameObject.TryGetComponent(out _enemy))
+        {
+            _enemy.GetDamage(_damage);
+        }
+        else if (other.gameObject.TryGetComponent(out _player))
+        {
+            _player.GetDamage(_damage);
         }
         Destroy(this.gameObject);
     }

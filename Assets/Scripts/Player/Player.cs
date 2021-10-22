@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Player
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CharacterController), typeof(AudioSource))]
     class Player : MonoBehaviour
     {
         [Header("Movement")]
@@ -17,11 +18,14 @@ namespace Assets.Scripts.Player
         [Header("Stats")]
         [SerializeField, Range(0f, 100f)] private float _health = 100f;
         [SerializeField] private PauseMenu _pause;
+        [SerializeField] private AudioClip[] _hurtClips;
 
         private PlayerInputProvider _inputProvider;
         private PlayerMover _mover;
         private PlayerRotator _rotator;
         private Transform _transform;
+        private SceneProvider _sceneProvider;
+        private AudioSource _audioSource;
 
         public event Action<int> HealthChanged;
         public event Action PausePressed;
@@ -34,6 +38,8 @@ namespace Assets.Scripts.Player
             _rotator = new PlayerRotator(_transform, _inputProvider);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            _sceneProvider = new SceneProvider();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void OnEnable()
@@ -66,6 +72,14 @@ namespace Assets.Scripts.Player
             _pause.VerticalSensitivityChanged -= SetVerticalSensitivity;
         }
 
+        private void PlaySound()
+        {
+            if (Random.Range(0, 2) == 1)
+            {
+                _audioSource.PlayOneShot(_hurtClips[Random.Range(0, _hurtClips.Length)]);
+            }
+        }
+
         public void GetHealth(float count)
         {
             _health += count;
@@ -79,6 +93,7 @@ namespace Assets.Scripts.Player
         public void GetDamage(float damage)
         {
             _health -= damage;
+            PlaySound();
             if (_health <= 0)
             {
                 Die();
@@ -86,9 +101,9 @@ namespace Assets.Scripts.Player
             HealthChanged?.Invoke(Convert.ToInt32(_health));
         }
 
-        public void Die()
-        {
-            //TODO
+        private void Die()
+        { 
+            StartCoroutine(_sceneProvider.LoadSceneAsync("Map"));
         }
 
         private void SetVerticalSensitivity(float value)

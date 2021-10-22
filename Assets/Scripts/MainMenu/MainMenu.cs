@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -30,5 +24,10 @@ public class MainMenu : MonoBehaviour
     public void StartLevel()
     {
         StartCoroutine(_sceneProvider.LoadSceneAsync("TrainingLevel"));
+    }
+
+    public void StartMission()
+    {
+        StartCoroutine(_sceneProvider.LoadSceneAsync("Map"));
     }
 }
