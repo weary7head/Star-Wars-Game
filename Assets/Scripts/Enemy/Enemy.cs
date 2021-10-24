@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
     private bool _isAlive = true;
     private AudioSource _deathAudioSource;
 
+    public event Action DeadCountChanged;
     public event Action<Vector3> Shooted;
 
     private void Start()
@@ -195,5 +196,6 @@ public class Enemy : MonoBehaviour
         SetState(State.Die);
         _isAlive = false;
         _deathAudioSource.Play();
+        DeadCountChanged?.Invoke();
     }
 }
