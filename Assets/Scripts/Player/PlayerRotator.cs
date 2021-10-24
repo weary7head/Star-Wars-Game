@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerRotator
 {
-    private Transform _transform;
+    private Transform _cameraTransform;
+    private Transform _bodyTransform;
     private PlayerInputProvider _inputProvider;
     private float _rotationX = 0;
-    public PlayerRotator(Transform transform, PlayerInputProvider inputProvider)
+    public PlayerRotator(Transform bodyTransform, Transform cameraTransform, PlayerInputProvider inputProvider)
     {
-        _transform = transform;
+        _bodyTransform = bodyTransform;
+        _cameraTransform = cameraTransform;
         _inputProvider = inputProvider;
     }
 
@@ -16,7 +18,8 @@ public class PlayerRotator
         _rotationX -= _inputProvider.GetMouseLook().y * verticalSensitivity;
         _rotationX = Mathf.Clamp(_rotationX, minimumVertical, maximumVertical);
         float delta = _inputProvider.GetMouseLook().x * horizontalSensitivity;
-        float rotationY = _transform.localEulerAngles.y + delta;
-        _transform.localEulerAngles = new Vector3(_rotationX, rotationY);
+        float rotationY = _bodyTransform.localEulerAngles.y + delta;
+        _bodyTransform.localEulerAngles = new Vector3(0, rotationY);
+        _cameraTransform.localEulerAngles = new Vector3(_rotationX, 0);
     }
 }

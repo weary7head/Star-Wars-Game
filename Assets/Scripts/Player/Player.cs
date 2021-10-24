@@ -10,7 +10,8 @@ namespace Assets.Scripts.Player
         [Header("Movement")]
         [SerializeField] private float _speed = 6.0f;
         [SerializeField] private float _jumpHeight = 3f;
-        [Header("Camera")]
+        [Header("Camera")] 
+        [SerializeField] private Camera _camera;
         [SerializeField] private float _minimumVertical = -45.0f;
         [SerializeField] private float _maximumVertical = 45.0f;
         [SerializeField] private float _horizontalSensitivity = 1f;
@@ -35,7 +36,7 @@ namespace Assets.Scripts.Player
             _transform = GetComponent<Transform>();
             _inputProvider = new PlayerInputProvider();
             _mover = new PlayerMover(GetComponent<CharacterController>(), _transform, _inputProvider);
-            _rotator = new PlayerRotator(_transform, _inputProvider);
+            _rotator = new PlayerRotator(_transform, _camera.transform, _inputProvider);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _sceneProvider = new SceneProvider();
